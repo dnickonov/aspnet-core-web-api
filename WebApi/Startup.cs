@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
-using Pomelo.EntityFrameworkCore.MySql;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Text;
 using System.Collections.Generic;
@@ -37,7 +37,7 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"),
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly("WebApi"))
             );
 
@@ -66,7 +66,7 @@ namespace WebApi
                     options.TokenValidationParameters = new TokenValidationParameters
                                                             {
                                                                 ValidateIssuer = true,
-                                                                ValidateAudience = true,
+                                                                ValidateAudience = false,
                                                                 ValidateIssuerSigningKey = true,
                                                                 ValidateLifetime = true,
 
